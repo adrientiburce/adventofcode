@@ -1,7 +1,7 @@
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-input = open(f'{dir_path}/input.txt', 'r')
+input = open(f"{dir_path}/input.txt", "r")
 lines = input.readlines()
 
 # ======= PART ONE ========
@@ -14,6 +14,7 @@ for line in lines:
     password = ll[2]
     if n1 <= password.count(letter) <= n2:
         res += 1
+
 # ======= PART TWO ========
     if password[n1-1] == letter and not(password[n2-1] == letter):
         res2 += 1
