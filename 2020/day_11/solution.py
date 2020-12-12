@@ -1,37 +1,39 @@
 import os
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-input = open(f"{dir_path}/input.txt", "r")
-seats = []
-for l in input.read().splitlines():
-    seats.append(list(l))
-h, w = len(seats), len(seats[0])
 
 
-dirs = {'up': (1, 0), 'down': (-1, 0), 'right': (0, 1), 'left': (0, -1),
-        'd_up_r': (1, 1), 'd_down_r': (-1, 1), 'd_up_l': (1, -1), 'd_down_l': (-1, -1)
-        }
+def parse_input(file: str):
+    input = open(f"{dir_path}/{file}.txt", "r")  # 37 & 26
+    seats = []
+    for l in input.read().splitlines():
+        seats.append(list(l))
+    return seats
 
-full_seats = [0] * h
-for i in range(h):
-    full_seats[i] = [0] * w
-    for j in range(w):
-        full_seats[i][j] = ("#" if seats[i][j] == "L" else ".")
+
+seats = parse_input("input")
+
+DIRECTIONS = {
+    'up': (1, 0), 'down': (-1, 0), 'right': (0, 1), 'left': (0, -1),
+    'd_up_r': (1, 1), 'd_down_r': (-1, 1), 'd_up_l': (1, -1), 'd_down_l': (-1, -1)
+}
 
 
 def next_round(seats: list[list], part: int, max_visible: int):
+    h, w = len(seats), len(seats[0])
     next_round = [0] * h
     for i in range(h):
         next_round[i] = [0] * w
         for j in range(w):
             count = 0
-            for k in dirs:
+            for k in DIRECTIONS:
                 m = 1
-                ii, jj = i+dirs[k][0], j+dirs[k][1]
+                ii, jj = i+DIRECTIONS[k][0], j+DIRECTIONS[k][1]
                 while(ii >= 0 and jj >= 0 and ii < h and jj < w):
                     if seats[ii][jj] == ".":
                         m += 1
-                        ii, jj = i+m*dirs[k][0], j+m*dirs[k][1]
+                        ii, jj = i+m*DIRECTIONS[k][0], j+m*DIRECTIONS[k][1]
                     else:
                         count += seats[ii][jj] == "#"
                         break
@@ -53,8 +55,8 @@ def count_seats(seats):
     return total
 
 
-def find_stability(part: int, max_visible: int):
-    current_seat = full_seats
+def find_stability(part: int, max_visible: int, seats=seats):
+    current_seat = seats
     i = 1
     while True:
         next_seats = next_round(current_seat, part, max_visible)
@@ -65,4 +67,11 @@ def find_stability(part: int, max_visible: int):
         i += 1
 
 
-print("Part 1:", find_stability(1, 4), ", Part 2:", find_stability(2, 5))
+def test_demo():
+    assert find_stability(1, 4, parse_input("demo")) == 37
+    assert find_stability(2, 5, parse_input("demo")) == 26
+
+
+start = time.time()
+print("Part 1:", find_stability(1, 4))  # , "/ Part 2:", find_stability(2, 5))
+print("--- %.4f seconds ---" % (time.time() - start))

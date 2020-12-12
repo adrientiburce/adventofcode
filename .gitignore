@@ -1,2 +1,6 @@
 /.vscode
 session.txt
+
+# python 
+
+/.pytest*
