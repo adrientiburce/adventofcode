@@ -16,7 +16,10 @@ def curlInput(year, day, dayPath):
             f = open(dayPath + "/input.txt", "a")
             f.write(input)
             f.close()
-            open(dayPath + "/solution.py", "a")
+            solution_f = open(dayPath + "/solution.py", "w")
+            with open("template.py") as f:
+                lines = f.readlines()
+                solution_f.writelines(lines)
     except FileNotFoundError:
         print("File session.txt missing at root's project")
         os.unlink(dayPath)
