@@ -4,3 +4,4 @@ session.txt
 # python 
 
 /.pytest*
+__pycache__/

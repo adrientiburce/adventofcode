@@ -25,8 +25,8 @@ def part_2(lines=lines):
 
 def test_demo():
     pass
-    # assert part_1(parse_input("demo")) ==  ## REPLATE HERE !!##
-    # assert part_2(parse_input("demo")) ==  ## REPLATE HERE !!##
+    # assert part_1(parse_input("demo")) ==  ## REPLACE HERE !!##
+    # assert part_2(parse_input("demo")) ==  ## REPLACE HERE !!##
 
 
 start = time.time()
